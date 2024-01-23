@@ -15,18 +15,20 @@ if __name__ == '__main__':
  local_engine = db_local.init_db_engine()
  
  def orders_run():
+      """
+      The function `orders_run()` connects to a database, extracts data from a specific table, cleans the
+      data, and uploads the cleaned data to a different table in the database.
+      """
       
-       db2 = DatabaseConnector('db_creds.yaml')
-       de2 = DataExtractor()
-       table_list = de2.list_db_tables(engine=db2.engine)
-       orders_raw = de2.read_rds_table(engine=db2.engine, table_name=table_list[2])
-       orders_cleaned_init = DataCleaning(orders_table=orders_raw)
-       cleaned_orders = orders_cleaned_init.clean_orders_table()
-       db2.upload_to_db(cleaned_dataframe=cleaned_orders, table_name='orders_table', connection=local_engine)
+      db2 = DatabaseConnector('db_creds.yaml')
+      de2 = DataExtractor()
+      table_list = de2.list_db_tables(engine=db2.engine)
+      orders_raw = de2.read_rds_table(engine=db2.engine, table_name=table_list[2])
+      orders_cleaned_init = DataCleaning(orders_table=orders_raw)
+      cleaned_orders = orders_cleaned_init.clean_orders_table()
+      db2.upload_to_db(cleaned_dataframe=cleaned_orders, table_name='orders_table', connection=local_engine)
  
- print("starting orders run")
- orders_run()
- print("finished orders run")
+
 
  db = DatabaseConnector('db_creds.yaml')
  de = DataExtractor()
@@ -45,19 +47,25 @@ if __name__ == '__main__':
  s3_json_object_key = "date_details.json"   
  
  def users_run():
+      """
+      The function `users_run()` retrieves data from a database table, cleans the data, and uploads the
+      cleaned data to another table in the database.
+      """
 
-       table_list = de.list_db_tables(engine=eng)
-       users_raw = de.read_rds_table(engine=eng, table_name=table_list[1])
-       user_clean_init = DataCleaning(users_table=users_raw)
-       cleaned_res = user_clean_init.clean_user_data()
-       print(cleaned_res.head())
-       db.upload_to_db(cleaned_dataframe=cleaned_res, table_name='dim_users', connection=local_engine)
+      table_list = de.list_db_tables(engine=eng)
+      users_raw = de.read_rds_table(engine=eng, table_name=table_list[1])
+      user_clean_init = DataCleaning(users_table=users_raw)
+      cleaned_res = user_clean_init.clean_user_data()
+      print(cleaned_res.head())
+      db.upload_to_db(cleaned_dataframe=cleaned_res, table_name='dim_users', connection=local_engine)
 
- print("starting users run")
- users_run()
- print("finished users run")
+
 
  def cards_run():
+      """
+      The function "cards_run" retrieves data from a PDF file, cleans the data, and uploads it to a
+      PostgreSQL database.
+      """
    
       card_raw = de.retrieve_pdf_data(filepath=pdf_file)
       card_cleaned_init = DataCleaning(cards_table=card_raw)
@@ -66,42 +74,44 @@ if __name__ == '__main__':
       db.upload_to_db(cleaned_dataframe=cleaned_cards, table_name='dim_card_details', connection=local_engine)
       print("cards data uploaded to pgadmin4")
     
- print("starting cards run")
- cards_run()
- print("finished cards run")
+
 
  def stores_run():
+      """
+      The function `stores_run()` retrieves store data, cleans it, and uploads it to a database table.
+      """
 
-     stores_raw = de.retrieve_stores_data(endpoint=retrieve_store_endpoint, headers=headers)
-     stores_clean_init = DataCleaning(stores_table=stores_raw)
-     cleaned_stores = stores_clean_init.clean_store_data()
-     db.upload_to_db(cleaned_dataframe=cleaned_stores, table_name='dim_store_details', connection=local_engine)
+      stores_raw = de.retrieve_stores_data(endpoint=retrieve_store_endpoint, headers=headers)
+      stores_clean_init = DataCleaning(stores_table=stores_raw)
+      cleaned_stores = stores_clean_init.clean_store_data()
+      db.upload_to_db(cleaned_dataframe=cleaned_stores, table_name='dim_store_details', connection=local_engine)
 
- print("starting stores run")
- stores_run()
- print("finished stores run")
+
 
  def products_run():
+      """
+      The function `products_run` extracts data from an S3 bucket, cleans the data, and uploads it to a
+      database table.
+      """
   
-    products_raw = de.extract_from_s3(bucket=s3_bucket, file_from_s3=s3_object_key)
-    product_clean_init = DataCleaning(products_table=products_raw)
-    cleaned_products = product_clean_init.convert_product_weights()
-    db.upload_to_db(cleaned_dataframe=cleaned_products, table_name='dim_products', connection=local_engine)
+      products_raw = de.extract_from_s3(bucket=s3_bucket, file_from_s3=s3_object_key)
+      product_clean_init = DataCleaning(products_table=products_raw)
+      cleaned_products = product_clean_init.convert_product_weights()
+      db.upload_to_db(cleaned_dataframe=cleaned_products, table_name='dim_products', connection=local_engine)
     
- print("starting products run")
- products_run()
- print("finished products run")
+
 
  def datetime_run():
+      """
+      The function `datetime_run` extracts datetime data from an S3 JSON file, cleans it, and uploads it
+      to a database table.
+      """
       
-    datetime_raw = de.extract_from_s3_json(bucket=s3_json_bucket, file_from_s3=s3_json_object_key)
-    datetime_clean_init = DataCleaning(datetimes_table=datetime_raw)
-    cleaned_datetime = datetime_clean_init.clean_datetime_table()
-    db.upload_to_db(cleaned_dataframe=cleaned_datetime, table_name='dim_date_times', connection=local_engine)
+      datetime_raw = de.extract_from_s3_json(bucket=s3_json_bucket, file_from_s3=s3_json_object_key)
+      datetime_clean_init = DataCleaning(datetimes_table=datetime_raw)
+      cleaned_datetime = datetime_clean_init.clean_datetime_table()
+      db.upload_to_db(cleaned_dataframe=cleaned_datetime, table_name='dim_date_times', connection=local_engine)
     
- print("starting datetime run")
- datetime_run()
- print("finished datetime run")
 
  print('All Cleaning Done') 
 
