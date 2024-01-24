@@ -17,8 +17,8 @@ class DatabaseConnector:
         YAML file
         """
         self.yaml_file = yaml_file
-        self.creds_dict = {}
-        self.engine = self.init_db_engine()
+        #self.creds_dict = {}
+        #self.engine = self.init_db_engine()
         
 
     def read_db_creds(self):
@@ -29,8 +29,9 @@ class DatabaseConnector:
         """
 
         with open(self.yaml_file, 'r') as file:
-            self.creds_dict = yaml.safe_load(file)
-        return self.creds_dict
+            creds_dict = yaml.safe_load(file)
+            print(creds_dict)
+        return creds_dict
 
     def init_db_engine(self, database_type="postgresql", dbapi="psycopg2"):
         """
@@ -44,11 +45,11 @@ class DatabaseConnector:
         for connecting to PostgreSQL databases, defaults to psycopg2 (optional)
         :return: the database engine object.
         """
-        
-        self.engine = create_engine(f"{database_type}+{dbapi}://{self.creds_dict['USER']}:{self.creds_dict['PASSWORD']}@{self.creds_dict['HOST']}:{self.creds_dict['PORT']}/{self.creds_dict['DATABASE']}")
-        self.engine = self.engine.connect()
+        creds_dict = self.read_db_creds()
+        engine = create_engine(f"{database_type}+{dbapi}://{creds_dict['USER']}:{creds_dict['PASSWORD']}@{creds_dict['HOST']}:{creds_dict['PORT']}/{creds_dict['DATABASE']}")
+        engine = engine.connect()
         print('Database connected')
-        return self.engine
+        return engine
 
     def upload_to_db(self, cleaned_dataframe: pd.DataFrame, table_name: str, connection):
         """

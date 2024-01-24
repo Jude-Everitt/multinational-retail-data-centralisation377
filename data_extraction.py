@@ -7,8 +7,9 @@ import json
 import numpy as np
 import boto3
 from io import StringIO
+import yaml
 
-headers = {'x-api-key': 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'}
+#headers = {'x-api-key': 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'}
 num_stores_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores'
 retrieve_store_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details/{store_number}'
 s3_url = "s3://data-handling-public/products.csv"
@@ -25,6 +26,17 @@ class DataExtractor:
         The above function is a constructor that initializes an object of a class.
         """
         pass
+
+    def read_api_creds(self):
+        """
+        The function reads a YAML file containing database credentials and returns them as a dictionary.
+        :return: the `creds_dict` variable, which is a dictionary containing the credentials read from
+        the YAML file.
+        """
+
+        with open("api_key.yaml", 'r') as file:
+            api_key_header = yaml.safe_load(file)
+        return api_key_header
 
 
     def list_db_tables(self, engine):
@@ -93,9 +105,7 @@ class DataExtractor:
         """
         num_stores_endpoint = endpoint
         num_stores_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores'
-        api = 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'
-        true_header = {'x-api-key': api}
-        response = requests.get(num_stores_endpoint, headers=true_header)
+        response = requests.get(num_stores_endpoint, headers=headers)
         print(f"Status Code: {response.status_code}")
         stores_list = response.json()
         return stores_list['number_stores']
@@ -167,5 +177,8 @@ class DataExtractor:
 if __name__ == '__main__':
     db = DatabaseConnector('db_creds.yaml')
     de = DataExtractor()
-    table_list = de.list_db_tables(engine=db.engine)
+    source_engine = db.init_db_engine()
+    table_list = de.list_db_tables(source_engine)
     print(table_list)
+    api_key_header = de.read_api_creds()
+    de.list_number_of_stores("https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores", api_key_header)
