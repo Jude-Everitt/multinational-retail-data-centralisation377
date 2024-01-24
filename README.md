@@ -1,5 +1,5 @@
 # Multinational Retail Data Centralisation
-The MRDC project is a project where a company's sales data is spread across different data sources and each data sourrcee is extracted, cleaned and stored in a database I created for easier and more accesable analysis. 
+The MRDC project is a project where a company's sales data is spread across different data sources and each data source is extracted, cleaned and stored in a database I created for easier and more accesable analysis. 
 
 ## Table Of Contents
 
