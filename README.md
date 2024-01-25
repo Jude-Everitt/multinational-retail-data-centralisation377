@@ -21,22 +21,22 @@ Databasee Extraction contains a class called DatabaseExtractor which consists of
 ### Data Cleaning
 
 The Data Cleaning file contains a class called DataCleaning and is used for cleaning and preprocessing data. The function initializes the class instance with optional table parameters.
-        users_table - This parameter represents a table or data structure that stores information
+        ####users_table - This parameter represents a table or data structure that stores information
         about users. It could be a database table, a list, a dictionary, or any other data structure
         that allows storing and retrieving user information.
-        cards_table - The `cards_table` parameter is used to store information about credit cards
+        ####cards_table - The `cards_table` parameter is used to store information about credit cards
         or payment methods associated with users. It could include fields such as card number,
         cardholder name, expiration date, and billing address.
-        stores_table - The `stores_table` parameter is used to specify the table or data
+        ####stores_table - The `stores_table` parameter is used to specify the table or data
         structure that stores information about stores. This could include details such as store names,
         addresses, contact information, and any other relevant information about the stores.
-        products_table - The `products_table` parameter is used to specify the table or data
+        ####products_table - The `products_table` parameter is used to specify the table or data
         structure that stores information about products. This table typically contains details such as
         product names, descriptions, prices, and other relevant information.
-        orders_table - The `orders_table` parameter is used to specify the table or data
+        ####orders_table - The `orders_table` parameter is used to specify the table or data
         structure that stores information about orders. This could include details such as order ID,
         customer ID, product ID, quantity, price, and any other relevant information related to orders.
-        datetimes_table - The `datetimes_table` parameter is used to specify the table or data
+        ####datetimes_table - The `datetimes_table` parameter is used to specify the table or data
         structure that stores datetime information. It could be a database table, a list, a dictionary,
         or any other data structure that can store datetime values. This parameter allows you to pass an
         existing table or create a new one specifically.
