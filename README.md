@@ -46,6 +46,7 @@ The Data Cleaning file contains a class called DataCleaning and is used for clea
         structure that stores datetime information. It could be a database table, a list, a dictionary,
         or any other data structure that can store datetime values. This parameter allows you to pass an
         existing table or create a new one specifically.
+
 The DataCleaning class also contains statistic methods which are methods within a class that have no access to anything else in the class. They cannot change or look at any object attributes or call other methods within the class.
         "datatime_transform" 
 
