@@ -30,7 +30,6 @@ class DatabaseConnector:
 
         with open(self.yaml_file, 'r') as file:
             creds_dict = yaml.safe_load(file)
-            print(creds_dict)
         return creds_dict
 
     def init_db_engine(self, database_type="postgresql", dbapi="psycopg2"):
@@ -71,6 +70,6 @@ class DatabaseConnector:
 
 
 if __name__ == '__main__':
-    db = DatabaseConnector('db_creds.yaml')
+ db = DatabaseConnector("db_creds.yaml")
    
     

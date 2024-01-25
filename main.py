@@ -11,34 +11,33 @@ from data_cleaning import DataCleaning
 
 if __name__ == '__main__':
  
- db_local = DatabaseConnector('pgadmin4_connection_creds.yaml')
- local_engine = db_local.init_db_engine()
+
  
  def orders_run():
       """
       The function `orders_run()` connects to a database, extracts data from a specific table, cleans the
       data, and uploads the cleaned data to a different table in the database.
       """
-      
+      db_local = DatabaseConnector('db_creds_local.yaml')
+      local_engine = db_local.init_db_engine()
       db2 = DatabaseConnector('db_creds.yaml')
       de2 = DataExtractor()
-      table_list = de2.list_db_tables(engine=db2.engine)
-      orders_raw = de2.read_rds_table(engine=db2.engine, table_name=table_list[2])
+      table_list = de2.list_db_tables(engine=db2.init_db_engine())
+      orders_raw = de2.read_rds_table(engine=db2.init_db_engine(), table_name=table_list[2])
       orders_cleaned_init = DataCleaning(orders_table=orders_raw)
       cleaned_orders = orders_cleaned_init.clean_orders_table()
       db2.upload_to_db(cleaned_dataframe=cleaned_orders, table_name='orders_table', connection=local_engine)
  
-
+ 
 
  db = DatabaseConnector('db_creds.yaml')
  de = DataExtractor()
  eng = db.init_db_engine()
- db_local = DatabaseConnector('pgadmin4_connection_creds.yaml')
+ db_local = DatabaseConnector('db_creds_local.yaml')
  local_engine = db_local.init_db_engine()
  pdf_file = 'https://data-handling-public.s3.eu-west-1.amazonaws.com/card_details.pdf'
- headers = {'x-api-key': 'ayFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMXi_key'}
  num_stores_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores'
- retrieve_store_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details/{store_number}'
+ retrieve_store_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details/'
  s3_url = "s3://data-handling-public/products.csv"
  s3_bucket = "data-handling-public"
  s3_object_key = "products.csv"
@@ -59,7 +58,7 @@ if __name__ == '__main__':
       print(cleaned_res.head())
       db.upload_to_db(cleaned_dataframe=cleaned_res, table_name='dim_users', connection=local_engine)
 
-
+ 
 
  def cards_run():
       """
@@ -74,32 +73,32 @@ if __name__ == '__main__':
       db.upload_to_db(cleaned_dataframe=cleaned_cards, table_name='dim_card_details', connection=local_engine)
       print("cards data uploaded to pgadmin4")
     
-
+ 
 
  def stores_run():
       """
       The function `stores_run()` retrieves store data, cleans it, and uploads it to a database table.
       """
-
+      headers = de.read_api_creds()
       stores_raw = de.retrieve_stores_data(endpoint=retrieve_store_endpoint, headers=headers)
       stores_clean_init = DataCleaning(stores_table=stores_raw)
       cleaned_stores = stores_clean_init.clean_store_data()
       db.upload_to_db(cleaned_dataframe=cleaned_stores, table_name='dim_store_details', connection=local_engine)
 
-
+ stores_run()
 
  def products_run():
       """
       The function `products_run` extracts data from an S3 bucket, cleans the data, and uploads it to a
       database table.
       """
-  
+      
       products_raw = de.extract_from_s3(bucket=s3_bucket, file_from_s3=s3_object_key)
       product_clean_init = DataCleaning(products_table=products_raw)
       cleaned_products = product_clean_init.convert_product_weights()
       db.upload_to_db(cleaned_dataframe=cleaned_products, table_name='dim_products', connection=local_engine)
     
-
+ products_run()
 
  def datetime_run():
       """
@@ -112,6 +111,6 @@ if __name__ == '__main__':
       cleaned_datetime = datetime_clean_init.clean_datetime_table()
       db.upload_to_db(cleaned_dataframe=cleaned_datetime, table_name='dim_date_times', connection=local_engine)
     
-
+ datetime_run()
  print('All Cleaning Done') 
 

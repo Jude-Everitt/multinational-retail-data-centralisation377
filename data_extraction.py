@@ -123,10 +123,11 @@ class DataExtractor:
         """
 
         curr_stores = []
-        no_of_stores = self.list_number_of_stores(endpoint='https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores', headers={'x-api-key': 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'})
-        retrieve_store_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details/{store_number}'
+        no_of_stores = self.list_number_of_stores(endpoint=num_stores_endpoint, headers=headers)
+        retrieve_store_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details/'
+        retrieve_store_endpoint = endpoint
         for store in range(0, no_of_stores):
-            response = requests.get(f"{'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details/'}{store}", headers={'x-api-key': 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'}).json()
+            response = requests.get(f"{retrieve_store_endpoint}{store}", headers=headers).json()
             curr_stores.append(pd.DataFrame(response,index=[np.NaN]))
         curr_stores_df = pd.concat(curr_stores)
         print(f'stores loaded into dataframe with {len(curr_stores_df)} rows :')
@@ -181,4 +182,5 @@ if __name__ == '__main__':
     table_list = de.list_db_tables(source_engine)
     print(table_list)
     api_key_header = de.read_api_creds()
-    de.list_number_of_stores("https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores", api_key_header)
+    de.list_number_of_stores(num_stores_endpoint, api_key_header)
+    de.retrieve_stores_data(retrieve_store_endpoint, api_key_header)
