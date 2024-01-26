@@ -28,7 +28,7 @@ if __name__ == '__main__':
       cleaned_orders = orders_cleaned_init.clean_orders_table()
       db2.upload_to_db(cleaned_dataframe=cleaned_orders, table_name='orders_table', connection=local_engine)
  
- 
+ orders_run()
 
  db = DatabaseConnector('db_creds.yaml')
  de = DataExtractor()
@@ -58,7 +58,7 @@ if __name__ == '__main__':
       print(cleaned_res.head())
       db.upload_to_db(cleaned_dataframe=cleaned_res, table_name='dim_users', connection=local_engine)
 
- 
+ users_run()
 
  def cards_run():
       """
@@ -73,7 +73,7 @@ if __name__ == '__main__':
       db.upload_to_db(cleaned_dataframe=cleaned_cards, table_name='dim_card_details', connection=local_engine)
       print("cards data uploaded to pgadmin4")
     
- 
+ cards_run()
 
  def stores_run():
       """
