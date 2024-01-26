@@ -21,14 +21,14 @@ Within Database Utils a DatabaseConnector class is created. The historical data 
 
 Databasee Extraction contains a class called DatabaseExtractor which consists of methods each used to extract data from different data sources. 
 
--"read_api_creds" is a method which reads the credentials off of a yaml file and returns it a dictionary which is to be used in further methods. 
--"list_db_tables" retrieves a list of table names from a data sqlalchemy engine. The engine parameter is an instance of a database which is used to connect to the database and perrform operations on it. Returning a list of table names in the database. 
--"read_rds_table" reads and conevrts a table to a pandas dataframe object from a provided tablename and engine. 
--"retrieve_pdf_data" retrieves data from a PDF file and converts it into a pandas dataframe. The filepath/url parameter is a string that represents the file path of the PDF file that you want to retrieve data from. 
--"list_number_of_stores" function retrieves the number of stores from a specified endpoint using an API key and returns the number of stores. The endpoint parameter is a string that represents the URL of the API endpoint you want to make a request to. The headers parameter is a dictionary (created from "read_api_creds") that contains the headers to be included in the HTTP request. The function returns the number of stores from the response JSON. 
--"retrieve_stroes_data" returns a pandas DataFrame containing the store details retrieved from the specified endpoint and api key. 
--"extract_from_s3" extracts data from a csv file stored in an S3 bucket and returns it as a pandas DataFrame. The bucket parameter is the name of the S3 bucket from which you want to extract the file. It is a string that represents the name of the bucket. The file_from_s3 parameter is the name or key of the file that you want to extract from the S3 bucket. It is the specific file that you want to download and read as a pandas DataFrame. 
--"extract_from_s3_json" function extracts data from a JSON file stored in an S3 bucket and returns it as a pandas DataFrame. It contains the same parameters as the csv extraaction. 
+- "read_api_creds" is a method which reads the credentials off of a yaml file and returns it a dictionary which is to be used in further methods.
+- "list_db_tables" retrieves a list of table names from a data sqlalchemy engine. The engine parameter is an instance of a database which is used to connect to the database and perrform operations on it. Returning a list of table names in the database.
+- "read_rds_table" reads and conevrts a table to a pandas dataframe object from a provided tablename and engine.
+- "retrieve_pdf_data" retrieves data from a PDF file and converts it into a pandas dataframe. The filepath/url parameter is a string that represents the file path of the PDF file that you want to retrieve data from.
+-  "list_number_of_stores" function retrieves the number of stores from a specified endpoint using an API key and returns the number of stores. The endpoint parameter is a string that represents the URL of the API endpoint you want to make a request to. The headers parameter is a dictionary (created from "read_api_creds") that contains the headers to be included in the HTTP request. The function returns the number of stores from the response JSON.
+-  "retrieve_stroes_data" returns a pandas DataFrame containing the store details retrieved from the specified endpoint and api key.
+-  "extract_from_s3" extracts data from a csv file stored in an S3 bucket and returns it as a pandas DataFrame. The bucket parameter is the name of the S3 bucket from which you want to extract the file. It is a string that represents the name of the bucket. The file_from_s3 parameter is the name or key of the file that you want to extract from the S3 bucket. It is the specific file that you want to download and read as a pandas DataFrame.
+-  "extract_from_s3_json" function extracts data from a JSON file stored in an S3 bucket and returns it as a pandas DataFrame. It contains the same parameters as the csv extraaction. 
 
 ### Data Cleaning
 
