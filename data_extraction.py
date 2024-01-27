@@ -172,7 +172,7 @@ class DataExtractor:
         s3_data = s3_object['Body'].read().decode('utf-8')
         df = pd.read_json(StringIO(s3_data))
         print(df.head())
-        print('S3 file Downloaded')
+        print('S3 File Downloaded')
         return df
 
 if __name__ == '__main__':

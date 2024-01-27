@@ -66,7 +66,7 @@ class DatabaseConnector:
 
         print('almost there')
         cleaned_dataframe.to_sql(table_name, con=connection, if_exists='replace')
-        print('cleaned dataframe uploaded to postgreSQL')
+        print('Cleaned dataframe uploaded to postgreSQL')
 
 
 if __name__ == '__main__':

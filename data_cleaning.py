@@ -269,7 +269,7 @@ class DataCleaning():
      
         orders = self.orders_table
         orders = orders.drop(columns=['first_name','last_name','1','level_0','index']).reindex()
-        print('Orders table cleaned')
+        print('Orders Table Cleaned')
         return orders
     
 
