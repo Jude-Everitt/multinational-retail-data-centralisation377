@@ -112,5 +112,7 @@ if __name__ == '__main__':
       db.upload_to_db(cleaned_dataframe=cleaned_datetime, table_name='dim_date_times', connection=local_engine)
     
  datetime_run()
+ print('All Extracting Done')
  print('All Cleaning Done') 
+ print('All Uploading Done')
 
