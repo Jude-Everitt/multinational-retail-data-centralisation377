@@ -2,6 +2,9 @@
 
 --Task 1: Cast types to orders_table
 
+-- SELECT * FROM orders_table
+-- LIMIT 10;
+
 ALTER TABLE orders_table 
 ALTER COLUMN product_quantity TYPE SMALLINT,
 ALTER COLUMN date_uuid TYPE UUID USING date_uuid::UUID,
@@ -13,22 +16,28 @@ ALTER COLUMN product_code TYPE VARCHAR(11);
 SELECT * FROM orders_table
 LIMIT 10;
 
--- Cast types to dim_users_table
+
+-- Task 2: Cast types to dim_users_table
+
+-- SELECT * FROM dim_users_table
+-- LIMIT 10;
 
 ALTER TABLE dim_users
 ALTER COLUMN first_name TYPE VARCHAR(225),
 ALTER COLUMN last_name TYPE VARCHAR(225),
-ALTER COLUMN date_of_birth TYPE DATE,
+ALTER COLUMN date_of_birth TYPE DATE USING date_of_birth::date,
 ALTER COLUMN country_code TYPE VARCHAR(2),
 ALTER COLUMN user_uuid TYPE UUID USING user_uuid::UUID,
-ALTER COLUMN join_date TYPE DATE;
+ALTER COLUMN join_date TYPE DATE USING join_date::date;
 
 SELECT * FROM dim_users
 LIMIT 10;
 
--- Adapt Null & concat lat to remove dups dim_store_details
 
+-- Task 3: Adapt Null & concat lat to remove dups dim_store_details
 
+-- SELECT * FROM dim_store_details
+-- LIMIT 10;
 
 UPDATE dim_store_details
 SET latitude = 0
@@ -61,11 +70,11 @@ ALTER COLUMN continent TYPE VARCHAR(255);
 SELECT * FROM dim_store_details
 LIMIT 10;
 
---Add new column weight_class
+
+-- Task 4: Add new column weight_class
 
 -- SELECT * FROM dim_products
 -- LIMIT 10;
-
 
 ALTER TABLE dim_products
 ADD COLUMN weight_class VARCHAR(15);
@@ -85,12 +94,14 @@ LIMIT 10;
 
 --Task 5: Update the dim_products with the required data types
 
+-- SELECT * FROM dim_products
+-- LIMIT 10;
 
 ALTER TABLE dim_products
-	RENAME COLUMN removed TO still_available;
+RENAME COLUMN removed TO still_available;
 
 ALTER TABLE dim_products
-ALTER COLUMN product_price TYPE FLOAT USING product_price::DOUBLE PRECISION;
+ALTER COLUMN product_price TYPE FLOAT USING product_price::DOUBLE PRECISION,
 ALTER COLUMN weight TYPE FLOAT USING weight::DOUBLE PRECISION, 
 ALTER COLUMN category TYPE VARCHAR(18),
 ALTER COLUMN "EAN" TYPE VARCHAR(17),
