@@ -70,6 +70,27 @@ The main script contains different functions each used to access each pipeline o
 #### datetimes_run 
 - The datetimes_run is used to specify the table or data structure that stores datetime information. It could be a database table, a list, a dictionary, or any other data structure that can store datetime values. This parameter allows you to pass an existing table or create a new one specifically. 
 
+### SQL Table Formatting 
+
+Developing a star-based schema of the database, ensuring that the columns are of the correct data type. "sql_table_formatting.sql" is used to cast the tables in sql which are the dataframes uploaded from "main.py". 
+
+For example the first task is to cast the "orders_table". date_uuid and user_uuid data type is changed from text to UUID. card_number, store_code and product_code are changed from text to VARCHAR(?), or varrying character. The ? in VARCHAR should be replaced with an integer representing the maximum length of the values in that column. product_quantity is changed from BIGINT, big integer, to SMALLINT, small integer. 
+
+This is repeated for all tables, changing their existing data types to the desired types shown within the script. 
+
+dim_store_details had to be updated first before the tablee was cast. Within the lattitude and longitudee columns, vaalues of N/A are replaced with 0. Then there are two latitude columns, lattitude and lat, in the store details table which need to be merged. Lat was merged into lattitude and the already existing lat column was then deleated. 
+
+dim_procuts needs to be updated before being cast. procuct_price has the character £ with its values that need to be removed. The team that handles the deliveries would like a new human-readable column added for the weight so they can quickly make decisions on delivery weights. A new column weight_class is added which will contain human-readable values based on the weight range of the product. the column removed is renamed to still_available before being cast to a booleen data value. The table is then cast to the correct data types, which is described in the script. 
+
+
+dim_date_times is then cast to the correct data types, which is described in the script. 
+
+dim_card_deetails is then cast to the correct data types, which is described in the script. 
+
+Now that the tables have the appropriate data types the primary keys to thee dimension tables, each of the tables prefixed with dim, can be added. Each table will serve the orders_table which will be the single source of truth for the orders. On the column header of the orders_table there is all but one of the columns exist in one of the tables prefixed with dim. Then the columns are updated in the dim tables with a primary key that matches the same column in the orders_table, as to update the respective columns as primary key columns.
+
+Lastly the star baseed schema is finaliseed by creating foreign keys, which are added to the orders table to reference the primary kesy in the other tables. 
+
 ## Instilation Instructions
 
 To run this code:
