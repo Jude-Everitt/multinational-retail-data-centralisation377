@@ -2,9 +2,6 @@
 
 --Task 1: Cast types to orders_table
 
--- SELECT * FROM orders_table
--- LIMIT 10;
-
 ALTER TABLE orders_table 
 ALTER COLUMN product_quantity TYPE SMALLINT,
 ALTER COLUMN date_uuid TYPE UUID USING date_uuid::UUID,
@@ -19,9 +16,6 @@ LIMIT 10;
 
 -- Task 2: Cast types to dim_users_table
 
--- SELECT * FROM dim_users_table
--- LIMIT 10;
-
 ALTER TABLE dim_users
 ALTER COLUMN first_name TYPE VARCHAR(225),
 ALTER COLUMN last_name TYPE VARCHAR(225),
@@ -35,9 +29,6 @@ LIMIT 10;
 
 
 -- Task 3: Adapt Null & concat lat to remove dups dim_store_details
-
--- SELECT * FROM dim_store_details
--- LIMIT 10;
 
 UPDATE dim_store_details
 SET latitude = 0
@@ -73,9 +64,6 @@ LIMIT 10;
 
 -- Task 4: Add new column weight_class
 
--- SELECT * FROM dim_products
--- LIMIT 10;
-
 ALTER TABLE dim_products
 ADD COLUMN weight_class VARCHAR(15);
 
@@ -92,10 +80,8 @@ SET weight_class =
 SELECT * FROM dim_products
 LIMIT 10;
 
---Task 5: Update the dim_products with the required data types
 
--- SELECT * FROM dim_products
--- LIMIT 10;
+--Task 5: Update the dim_products with the required data types
 
 ALTER TABLE dim_products
 RENAME COLUMN removed TO still_available;
@@ -116,9 +102,6 @@ LIMIT 10;
 
 --Task 6: Update dim_date_times table
 
--- SELECT * FROM dim_date_times
--- LIMIT 10;
-
 ALTER TABLE dim_date_times
 ALTER COLUMN month TYPE VARCHAR(2),
 ALTER COLUMN year TYPE VARCHAR(4),
@@ -132,9 +115,6 @@ LIMIT 10;
 
 -- Task 7: Update dim_card_details table
 
--- SELECT * FROM dim_card_details
--- LIMIT 10;
-
 ALTER TABLE dim_card_details
 ALTER COLUMN card_number TYPE VARCHAR(19),
 ALTER COLUMN expiry_date TYPE VARCHAR(19),
@@ -142,6 +122,7 @@ ALTER COLUMN date_payment_confirmed TYPE DATE;
 
 SELECT * FROM dim_card_details
 LIMIT 10;
+
 
 --Task 8: Set a PRIMARY KEY in the dimension tables
 
@@ -157,9 +138,6 @@ ALTER TABLE dim_users
 ADD PRIMARY KEY (user_uuid);
 
 --Task 9: Finalise the star-based schema and add foreign keys to the orders table
-
-SELECT * FROM orders_table
-LIMIT 10;
 
 ALTER TABLE orders_table ADD CONSTRAINT fk_dim_date_times FOREIGN KEY (date_uuid) REFERENCES dim_date_times (date_uuid);
 ALTER TABLE orders_table ADD CONSTRAINT fk_product_code FOREIGN KEY (product_code) REFERENCES dim_products (product_code); 
