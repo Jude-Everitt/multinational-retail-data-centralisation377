@@ -46,7 +46,7 @@ The DataCleaning class also contains statistic methods which are methods within 
 Each method within the DataCleaning class is created to clean its corresponding data extracted froma  specific pipeline called within the "main.py" file. Each method is specific to clean the provided dataframe.
 - "clean_orders_table" removes specific columns from the orders table and returns the cleaned table.
 - "clean_user_data" cleans and processes user data by removing duplicates, formatting phone numbers, replacing country codes, filtering by country codes, filtering by user UUID length, and dropping null values.
-- "clean_card_data" cleans and transforms the data in the `cards_table` by removing duplicates, null values, and non-numeric card numbers, and converting date columns to the correct datetime format.
+- "clean_card_data" cleans and transforms the data in the "cards_table" by removing duplicates, null values, and non-numeric card numbers, and converting date columns to the correct datetime format.
 - "clean_store_data" cleans the store dataframe by removing unnecessary columns, setting a new index, dropping duplicates, filtering by specific country codes, removing newline characters in the address column, removing letters from the staff_numbers column, converting datetime values, correcting misspelled continents, and setting column value sets.
 - "convert_product_weights" cleans and converts the weights of products in a table.
 - "clean_datetime_table" cleans a datetime table by removing rows where the 'month' column is not a digit, dropping any rows with missing values, and removing duplicate rows.
@@ -91,6 +91,12 @@ Now that the tables have the appropriate data types the primary keys to thee dim
 
 Lastly the star baseed schema is finaliseed by creating foreign keys, which are added to the orders table to reference the primary kesy in the other tables. 
 
+### SQL Queries
+
+Now the sales data is in one location and the schema for the dataabase is finished. Queries are made on excel to obtain different metrics from the data. This is aim for thee buisness to make data-driven descisions and get a better understanding of its sales. 
+
+Each task referes to an individual enquiry by the company to highlight specific data. Each enquirey is noted with the task within the sql file along with the query code ran in sql with a breif explenation of what is being shown. 
+
 ## Instilation Instructions
 
 To run this code:
@@ -111,7 +117,44 @@ To run this code:
 
 ## Usage Instructions
 
+First create a .gitignore file. Within this have it ignore .env and .yaml files. This is to increase security and havee any sensitive information such as credentials, api keys ect hidden when pushed to github. 
+
+Create three .yaml files. One file for the credentials of the AWS database inwhich data is going to uploaded from. Another to contain the database credeentiaals of a local data base created on a local machine. The final .yaml file is to contain the api key to upload from a specific S3 buckeet.
+
+On thee main file, import all three classes made from the three seperate python files for the database conector, data extractor and data cleanor.
+
+Within the main.py file. Input the filenames of each yaml file into their corresponding variables. The db and db2 variables are the DatabaseConnector class initialised with the .yaml file of the AWS database. db_local and db2_local are the DatabaseConnector class initialised with the .yaml file of the local database.
+
+The variable pdf_file's value should be changed with the desired url of the data source.
+The two endpoints value should be changed with the desired urls or keys or values of the data source.
+All S3 bucket variable values should be changed with the desired url or value or key of the data source.
+
+Run the main script
+
+The if __name__ == '__main__': block is used to ensure that the code inside it is only executed if the script is run directly, and not if it is imported as a module.
+
+Open SQL and loginto your database. Use the query tool to format the data by running the sql table formatting script. 
+
+Then run the queries script to query the data to obtain specific sales info
+
 ## File Structure 
+
+#### Modules
+import boto3
+from io import StringIO
+import json
+import numpy as np
+import pandas as pd
+import re
+import requests
+from sqlalchemy import create_engine, inspect
+import tabula
+import yaml
+
+#### Classes
+from database_utils import DatabaseConnector
+from data_extraction import DataExtractor
+from data_cleaning import DataCleaning
 
 ## License Infornation
 
@@ -120,7 +163,7 @@ MIT License
 Copyright (c) 2023 Jude Everitt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "hangman milestones"), to deal
+of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is

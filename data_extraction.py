@@ -9,7 +9,6 @@ import boto3
 from io import StringIO
 import yaml
 
-#headers = {'x-api-key': 'yFBQbwXe9J3sd6zWVAMrK6lcxxr0q1lr2PT6DDMX'}
 num_stores_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/number_stores'
 retrieve_store_endpoint = 'https://aqj7u5id95.execute-api.eu-west-1.amazonaws.com/prod/store_details/{store_number}'
 s3_url = "s3://data-handling-public/products.csv"
@@ -51,8 +50,6 @@ class DataExtractor:
         inspector = inspect(engine)
         self.table_list = inspector.get_table_names()
         print(self.table_list)
-        # for column in inspector.get_columns(self.table_list):
-        #     print("Column: %s" % column['name'])
         return self.table_list
     
 
