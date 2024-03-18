@@ -1,6 +1,16 @@
 # Multinational Retail Data Centralisation
 The MRDC project is a project where a company's sales data is spread across different data sources and each data source is extracted, cleaned and stored in a database I created for easier and more accesable analysis. 
 
+## Architecture
+
+<img width="732" alt="Screenshot 2024-03-18 at 13 30 45" src="https://github.com/Jude-Everitt/multinational-retail-data-centralisation377/assets/147021206/6750edd3-f7e3-4dea-8cfd-e98d1f98d9f0">
+
+
+<img width="732" alt="Screenshot 2024-03-18 at 13 30 23" src="https://github.com/Jude-Everitt/multinational-retail-data-centralisation377/assets/147021206/e553030c-a39f-4856-a140-6b8418a95aad">
+
+
+<img width="732" alt="Screenshot 2024-03-18 at 13 31 00" src="https://github.com/Jude-Everitt/multinational-retail-data-centralisation377/assets/147021206/e04a1c57-67ed-4bc0-87b9-9fc53631cd67">
+
 ## Table Of Contents
 
 1. Project Description
